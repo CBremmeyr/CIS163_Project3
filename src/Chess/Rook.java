@@ -1,18 +1,43 @@
 package Chess;
 
+/**********************************************************************
+ * Rook class to be used in a game of chess.
+ *
+ * @author Corbin Bremmeyr
+ * @author Michael James
+ * @version 4 March 2019
+ *********************************************************************/
 public class Rook extends ChessPiece {
 
+	/******************************************************************
+	 * Constructor that sets which player owns the piece.
+	 *
+	 * @param player is the player that has ownership of the piece.
+	 *****************************************************************/
 	public Rook(Player player) {
 		
 		super(player);
 	}
 
+	/******************************************************************
+	 * Gets the type name of the piece's type as a String.
+	 *
+	 * @return name of the piece's type ("Rook").
+	 *****************************************************************/
 	public String type() {
 		
 		return "Rook";
 	}
 	
 	// determines if the move is valid for a rook piece
+
+	/******************************************************************
+	 * Tell if a move is valid for this Rook.
+	 *
+	 * @param move is the move being considered.
+	 * @param board is the current playing field.
+	 * @return true if move is valid, false if move is not valid.
+	 *****************************************************************/
 	public boolean isValidMove(Move move, IChessPiece[][] board) {
 
 		// Check if move is valid in general
@@ -22,8 +47,8 @@ public class Rook extends ChessPiece {
 
 		// Check if move is valid specific to a rook
 
-		// Flags to show if 'move to' position is in different row/column
-		boolean diffCol = !(move.getFromColumn() == move.getToColumn());
+		// Flags to show if 'move to' position is in different row/col
+		boolean diffCol = !(move.getFromColumn()==move.getToColumn());
 		boolean diffRow = !(move.getFromRow() == move.getToRow());
 
 		// If move is not along row/column or in same spot it's invalid
@@ -47,7 +72,8 @@ public class Rook extends ChessPiece {
 				endPoint = move.getToColumn();
 			}
 
-			// Check for pieces over the range of the move, if there is a piece then the move is invalid
+			// Check for pieces over the range of the move, if there is
+			// a piece then the move is invalid
 			for(int i=startPoint; i < endPoint; ++i) {
 
 				// If a board location has a piece on it
@@ -71,7 +97,8 @@ public class Rook extends ChessPiece {
 				endPoint = move.getToRow();
 			}
 
-			// Check for pieces over the range of the move, if there is a piece then the move is invalid
+			// Check for pieces over the range of the move, if there is
+			// a piece then the move is invalid
 			for(int i=startPoint; i < endPoint; ++i) {
 
 				// If a board location has a piece on it
@@ -84,7 +111,6 @@ public class Rook extends ChessPiece {
 
         // True if passed all other tests
         return true;
-		
 	}
 	
 }
