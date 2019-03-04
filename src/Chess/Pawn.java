@@ -1,4 +1,4 @@
-package W19Project3GIVETOSTUDENTS;
+package Chess;
 
 public class Pawn extends ChessPiece {
 

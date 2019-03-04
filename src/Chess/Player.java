@@ -1,4 +1,4 @@
-package W19Project3GIVETOSTUDENTS;
+package Chess;
 
 public enum Player {
 	BLACK, WHITE;

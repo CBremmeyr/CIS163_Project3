@@ -1,4 +1,4 @@
-package W19Project3GIVETOSTUDENTS;
+package Chess;
 
 public abstract class ChessPiece implements IChessPiece {
 
