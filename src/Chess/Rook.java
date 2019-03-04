@@ -22,16 +22,16 @@ public class Rook extends ChessPiece {
 
 		// Check if move is valid specific to a rook
 
-		// Move in same row/column
-		// (toCol == fromCol) XNOR (toRow == fromRow)
+		// Flags to show if 'move to' position is in different row/column
 		boolean diffCol = !(move.getFromColumn() == move.getToColumn());
 		boolean diffRow = !(move.getFromRow() == move.getToRow());
 
-		if( !((diffRow && !diffCol) || (!diffRow && diffCol))) {
+		// If move is not along row/column or in same spot it's invalid
+		if(diffRow == diffCol) {
 			return false;
 		}
 
-		// If move goes through another piece
+		// If move goes through another piece it is invalid
 		if(diffCol) {		// Moving across the row
 
 			// Starting and end points of the loop
