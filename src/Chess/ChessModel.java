@@ -1,10 +1,10 @@
 package Chess;
 
-public class ChessModel implements IChessModel {	 
+public class ChessModel implements IChessModel {
+
     private IChessPiece[][] board;
 	private Player player;
 
-	// declare other instance variables as needed
 
 	public ChessModel() {
 		board = new IChessPiece[8][8];
@@ -28,16 +28,23 @@ public class ChessModel implements IChessModel {
 	public boolean isValidMove(Move move) {
 		boolean valid = false;
 
-		if (board[move.fromRow][move.fromColumn] != null)
-			if (board[move.fromRow][move.fromColumn].isValidMove(move, board) == true)
+		if (board[move.getFromRow()][move.getFromColumn()] != null)
+			if (board[move.getFromRow()][move.getFromColumn()].isValidMove(move, board) == true)
                 return true;
 
 		return valid;
 	}
 
 	public void move(Move move) {
-		board[move.toRow][move.toColumn] =  board[move.fromRow][move.fromColumn];
-		board[move.fromRow][move.fromColumn] = null;
+
+		// Only move if valid
+		if(this.isValidMove(move)) {
+
+			board[move.getToRow()][move.getToColumn()] = board[move.getFromRow()][move.getFromColumn()];
+			board[move.getFromRow()][move.getFromColumn()] = null;
+		}
+
+		// TODO: maybe throw exception if trying to make an invalid move?
 	}
 
 	public boolean inCheck(Player p) {
