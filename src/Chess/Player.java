@@ -9,11 +9,6 @@ public enum Player {
 	 * @return the {@code Player} whose turn is next
 	 */
 	public Player next() {
-		if (this == BLACK)
-			return WHITE;
-		else
-		 	return BLACK;
-		
-	//	return this == BLACK ? WHITE : BLACK;
+		return this == BLACK ? WHITE : BLACK;
 	}
 }

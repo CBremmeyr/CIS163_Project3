@@ -15,12 +15,18 @@ public abstract class ChessPiece implements IChessPiece {
 	}
 
 	public boolean isValidMove(Move move, IChessPiece[][] board) {
-		boolean valid = false;
+
+		// Move is invalid if moved to same location
+		if ((move.getFromRow() == move.getToRow()) && (move.getFromColumn() == move.getToColumn())) {
+			return false;
+		}
+
+		// Move is invalid if another piece with same owner is at moveTo location
+		if(board[move.getToRow()][move.getToColumn()].player() == this.player()) {
+			return false;
+		}
 
 		//  THIS IS A START... More coding needed
-		
-		if (((move.fromRow == move.toRow) && (move.fromColumn == move.toColumn)) == false)
-			return valid;
 
 		return false;
 	}
