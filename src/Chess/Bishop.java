@@ -36,8 +36,38 @@ public class Bishop extends ChessPiece {
 	 *****************************************************************/
 	public boolean isValidMove(Move move, IChessPiece[][] board) {
 
+		// Check if move is valid in general
+		if(super.isValidMove(move, board)) {
+			return false;
+		}
+
+		// Check if move is diagonal from starting position
+		if( !(Math.abs(move.getFromRow() - move.getToRow()) == Math.abs(move.getFromColumn() - move.getToColumn())) ) {
+			return false;
+		}
+
+		// Check if move goes over another piece
+		int startPnt = 0;
+		int endPnt = 0;
+
+		// Set starting point for loop based on what number is lower
+		if(move.getFromRow() < move.getToRow()) {
+			startPnt = move.getFromRow();
+			endPnt = move.getToRow();
+		}
+		else {
+			startPnt = move.getToRow();
+			endPnt = move.getFromRow();
+		}
+
+		// TODO: make helper function to generate indexes to check for pieces at, should use a int[abs(x0-x1)][2] to hold values
+		for() {
+			if(board[i][i].player() != null) {
+				return false;
+			}
+		}
+
+		// Return true if all other test failed
 		return true;
-        // More code is needed
-		
 	}
 }
