@@ -61,11 +61,11 @@ public class Bishop extends ChessPiece {
 		}
 
 		// TODO: make helper function to generate indexes to check for pieces at, should use a int[abs(x0-x1)][2] to hold values
-		for() {
-			if(board[i][i].player() != null) {
-				return false;
-			}
-		}
+//		for() {
+//			if(board[i][i].player() != null) {
+//				return false;
+//			}
+//		}
 
 		// Return true if all other test failed
 		return true;
