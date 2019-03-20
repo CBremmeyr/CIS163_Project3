@@ -25,9 +25,16 @@ public abstract class ChessPiece implements IChessPiece {
 		if(board[move.getToRow()][move.getToColumn()].player() == this.player()) {
 			return false;
 		}
+		//Move is on the board
+		if(move.getToRow() >= board.length || move.getToColumn() >= board.length
+				|| move.getToRow() < 0 || move.getToColumn() < 0){
+			return false;
+		}
 
-		//  THIS IS A START... More coding needed
 
-		return false;
+		return true;
 	}
+
+
+
 }

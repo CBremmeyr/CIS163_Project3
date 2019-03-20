@@ -78,6 +78,8 @@ public class ChessModel implements IChessModel {
 	}
 
 	public void AI() {
+
+
 		/*
 		 * Write a simple AI set of rules in the following order. 
 		 * a. Check to see if you are in check.
