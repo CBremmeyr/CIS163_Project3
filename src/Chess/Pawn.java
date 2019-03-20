@@ -19,7 +19,7 @@ public class Pawn extends ChessPiece {
 		}
 
 		//top player
-		if(super.player() == Player.WHITE) {
+		if(super.player() == Player.BLACK) {
 
 			//if first move
 			if(move.getFromRow() == 1){
@@ -48,7 +48,7 @@ public class Pawn extends ChessPiece {
 			&& move.getFromRow() == move.getToRow() - 1) {
 				//if enemy piece is there
 				if(board[move.getToRow()][move.getToColumn()]!= null){
-					if(board[move.getToRow()][move.getToColumn()].player() == Player.BLACK){
+					if(board[move.getToRow()][move.getToColumn()].player() == Player.WHITE){
 						return true;
 					}
 				}
@@ -60,7 +60,7 @@ public class Pawn extends ChessPiece {
 			return true;
 		}
 		//bottom team
-		if(super.player() == Player.BLACK) {
+		if(super.player() == Player.WHITE) {
 
 			//if first move
 			if(move.getFromRow() == board.length-2){
@@ -89,7 +89,7 @@ public class Pawn extends ChessPiece {
 					&& move.getFromRow() == move.getToRow() + 1) {
 				//if enemy piece is there
 				if(board[move.getToRow()][move.getToColumn()]!= null){
-					if(board[move.getToRow()][move.getToColumn()].player() == Player.WHITE){
+					if(board[move.getToRow()][move.getToColumn()].player() == Player.BLACK){
 						return true;
 					}
 				}
@@ -101,7 +101,7 @@ public class Pawn extends ChessPiece {
 			return true;
 		}
 
-		//non existant player
+		//non existent player
 return false;
 	}
 }

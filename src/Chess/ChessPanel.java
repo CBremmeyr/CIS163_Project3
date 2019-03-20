@@ -4,35 +4,77 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+/**********************************************************************
+ * GUI panel to be used to for a game of chess.
+ *********************************************************************/
 public class ChessPanel extends JPanel {
 
+    /** Size of the board */
     private int boardSize;
 
+    /** Buttons to make game board */
     private JButton[][] board;
+
+    /** Game logic class instance */
     private ChessModel model;
 
+    /** White rook icon */
     private ImageIcon wRook;
+
+    /** White bishop icon */
     private ImageIcon wBishop;
+
+    /** White queen icon */
     private ImageIcon wQueen;
+
+    /** White king icon */
     private ImageIcon wKing;
+
+    /** White pawn icon */
     private ImageIcon wPawn;
+
+    /** White knight icon */
     private ImageIcon wKnight;
 
+    /** Black rook icon */
     private ImageIcon bRook;
+
+    /** Black bishop icon */
     private ImageIcon bBishop;
+
+    /** Black queen icon */
     private ImageIcon bQueen;
+
+    /** Black king icon */
     private ImageIcon bKing;
+
+    /** Black pawn icon */
     private ImageIcon bPawn;
+
+    /** black knight icon */
     private ImageIcon bKnight;
 
+    /** Tell if button press is the first in a pair making a move */
     private boolean firstTurnFlag;
+
+    /** Row moving piece from */
     private int fromRow;
+
+    /** Row moving piece to */
     private int toRow;
+
+    /** Column moving piece from */
     private int fromCol;
+
+    /** Column moving piece to */
     private int toCol;
 
+    /** Listener for all board buttons */
     private Listener listener;
 
+    /******************************************************************
+     * Constructor for chess game panel.
+     *****************************************************************/
     public ChessPanel() {
         model = new ChessModel();
         this.boardSize = model.numRows();
@@ -42,7 +84,8 @@ public class ChessPanel extends JPanel {
 
         JPanel boardPanel = new JPanel();
         JPanel buttonPanel = new JPanel();
-        boardPanel.setLayout(new GridLayout(model.numRows(), model.numColumns(), 1, 1));
+        boardPanel.setLayout(new GridLayout(model.numRows(),
+                model.numColumns(), 1, 1));
 
         for (int r = 0; r < model.numRows(); r++) {
             for (int c = 0; c < model.numColumns(); c++) {
@@ -50,7 +93,7 @@ public class ChessPanel extends JPanel {
                     board[r][c] = new JButton("", null);
                     board[r][c].addActionListener(listener);
                 }
-                else if (model.pieceAt(r, c).player() == Player.WHITE) {
+                else if (model.pieceAt(r, c).player() == Player.WHITE){
                     placeWhitePieces(r, c);
                 }
                 else if(model.pieceAt(r, c).player() == Player.BLACK) {
@@ -69,14 +112,27 @@ public class ChessPanel extends JPanel {
         this.displayBoard();
     }
 
+    /******************************************************************
+     * Set background of the buttons to checkered pattern.
+     *
+     * @param r row of button to have the color set.
+     * @param c column of button to have the color set.
+     *****************************************************************/
     private void setBackGroundColor(int r, int c) {
-        if ((c % 2 == 1 && r % 2 == 0) || (c % 2 == 0 && r % 2 == 1)) {
+        if ((c % 2 == 1 && r % 2 == 0) || (c % 2 == 0 && r % 2 == 1)){
             board[r][c].setBackground(Color.LIGHT_GRAY);
-        } else if ((c % 2 == 0 && r % 2 == 0) || (c % 2 == 1 && r % 2 == 1)) {
+        } else if ((c % 2 == 0 && r % 2 == 0) ||
+                (c % 2 == 1 && r % 2 == 1)) {
             board[r][c].setBackground(Color.WHITE);
         }
     }
 
+    /******************************************************************
+     * Place buttons and attach listeners for a white piece.
+     *
+     * @param r row of button to be generated.
+     * @param c column of button to be generated.
+     *****************************************************************/
     private void placeWhitePieces(int r, int c) {
         if(model.pieceAt(r, c).type().equals("Pawn")) {
             board[r][c] = new JButton(null, wPawn);
@@ -104,6 +160,12 @@ public class ChessPanel extends JPanel {
         }
     }
 
+    /******************************************************************
+     * Place buttons and attach listeners for a black piece.
+     *
+     * @param r row of button to be generated.
+     * @param c column of button to be generated.
+     *****************************************************************/
     private void placeBlackPieces(int r, int c) {
         if(model.pieceAt(r, c).type().equals("Pawn")) {
             board[r][c] = new JButton(null, bPawn);
@@ -131,6 +193,9 @@ public class ChessPanel extends JPanel {
         }
     }
 
+    /******************************************************************
+     * Load all the icons into instance variables.
+     *****************************************************************/
     private void createIcons() {
 
         String iconPath = "./icons/";
@@ -152,7 +217,9 @@ public class ChessPanel extends JPanel {
         bKnight = new ImageIcon(iconPath + "bKnight.png");
     }
 
-    // method that updates the board
+    /******************************************************************
+     * Update location of piece icons.
+     *****************************************************************/
     private void displayBoard() {
 
         for (int r = 0; r < boardSize; r++) {
@@ -166,19 +233,19 @@ public class ChessPanel extends JPanel {
                     if(model.pieceAt(r, c).type().equals("Pawn")) {
                         board[r][c].setIcon(wPawn);
                     }
-                    else if(model.pieceAt(r, c).type().equals("Rook")) {
+                    else if(model.pieceAt(r, c).type().equals("Rook")){
                         board[r][c].setIcon(wRook);
                     }
-                    else if(model.pieceAt(r, c).type().equals("Knight")) {
+                    else if(model.pieceAt(r, c).type().equals("Knight")){
                         board[r][c].setIcon(wKnight);
                     }
-                    else if(model.pieceAt(r, c).type().equals("Bishop")) {
+                    else if(model.pieceAt(r, c).type().equals("Bishop")){
                         board[r][c].setIcon(wBishop);
                     }
-                    else if(model.pieceAt(r, c).type().equals("Queen")) {
+                    else if(model.pieceAt(r, c).type().equals("Queen")){
                         board[r][c].setIcon(wQueen);
                     }
-                    else if(model.pieceAt(r, c).type().equals("King")) {
+                    else if(model.pieceAt(r, c).type().equals("King")){
                         board[r][c].setIcon(wKing);
                     }
                 }
@@ -186,16 +253,16 @@ public class ChessPanel extends JPanel {
                     if(model.pieceAt(r, c).type().equals("Pawn")) {
                         board[r][c].setIcon(bPawn);
                     }
-                    else if(model.pieceAt(r, c).type().equals("Rook")) {
+                    else if(model.pieceAt(r, c).type().equals("Rook")){
                         board[r][c].setIcon(bRook);
                     }
-                    else if(model.pieceAt(r, c).type().equals("Knight")) {
+                    else if(model.pieceAt(r, c).type().equals("Knight")){
                         board[r][c].setIcon(bKnight);
                     }
-                    else if(model.pieceAt(r, c).type().equals("Bishop")) {
+                    else if(model.pieceAt(r, c).type().equals("Bishop")){
                         board[r][c].setIcon(bBishop);
                     }
-                    else if(model.pieceAt(r, c).type().equals("Queen")) {
+                    else if(model.pieceAt(r, c).type().equals("Queen")){
                         board[r][c].setIcon(bQueen);
                     }
                     else if(model.pieceAt(r, c).type().equals("King")) {
@@ -207,26 +274,42 @@ public class ChessPanel extends JPanel {
         repaint();
     }
 
-    // inner class that represents action listener for buttons
+    /******************************************************************
+     * Class to respond to game board button presses.
+     *****************************************************************/
     private class Listener implements ActionListener {
+
+        /**************************************************************
+         * Respond to game board button press.
+         *
+         * @param event event that triggered listener.
+         *************************************************************/
         public void actionPerformed(ActionEvent event) {
-            for (int r = 0; r < model.numRows(); r++)
-                for (int c = 0; c < model.numColumns(); c++)
-                    if (board[r][c] == event.getSource())
-                        if (firstTurnFlag == true) {
+
+            for(int r = 0; r < model.numRows(); r++) {
+                for(int c = 0; c < model.numColumns(); c++) {
+
+                    if(board[r][c] == event.getSource()) {
+
+                        if(firstTurnFlag == true) {
                             fromRow = r;
                             fromCol = c;
                             firstTurnFlag = false;
-                        } else {
+                        }
+                        else {
                             toRow = r;
                             toCol = c;
                             firstTurnFlag = true;
-                            Move m = new Move(fromRow, fromCol, toRow, toCol);
-                            if ((model.isValidMove(m)) == true) {
+                            Move m = new Move(fromRow, fromCol,
+                                    toRow, toCol);
+                            if((model.isValidMove(m)) == true) {
                                 model.move(m);
                                 displayBoard();
                             }
                         }
+                    }
+                }
+            }
         }
     }
 }
