@@ -1,11 +1,23 @@
 package Chess;
 
+/**********************************************************************
+ * Game logic class for game of chess.
+ *
+ * @author Corbin Bremmeyr
+ * @author Micheal James
+ * @version 20 March 2019
+ **********************************************************************/
 public class ChessModel implements IChessModel {
 
+	/** Board to hold logical chess pieces */
     private IChessPiece[][] board;
+
+    /** Player whoes turn it currently is */
 	private Player player;
 
-
+	/******************************************************************
+	 * Setup game logic for new game.
+	 *****************************************************************/
 	public ChessModel() {
 		board = new IChessPiece[8][8];
 		player = Player.WHITE;
@@ -38,21 +50,38 @@ public class ChessModel implements IChessModel {
 		}
 	}
 
+	/******************************************************************
+	 *
+	 *
+	 * @return
+	 *****************************************************************/
 	public boolean isComplete() {
 		boolean valid = false;
 		return valid;
 	}
 
+	/******************************************************************
+	 * Check if a move is valid.
+	 *
+	 * @param move a {@link W18project3.Move} object describing the move to be made.
+	 * @return true if the move is valid, false if move is invalid.
+	 *****************************************************************/
 	public boolean isValidMove(Move move) {
-		boolean valid = false;
 
 		if (board[move.getFromRow()][move.getFromColumn()] != null)
-			if (board[move.getFromRow()][move.getFromColumn()].isValidMove(move, board) == true)
-                return true;
+			if (board[move.getFromRow()][move.getFromColumn()]
+					.isValidMove(move, board)) {
+				return true;
+			}
 
-		return valid;
+		return false;
 	}
 
+	/******************************************************************
+	 * Perform move if it is valid.
+	 *
+	 * @param move a {@link W18project3.Move} object describing the move to be made.
+	 *****************************************************************/
 	public void move(Move move) {
 
 		// Only move if valid
@@ -65,32 +94,69 @@ public class ChessModel implements IChessModel {
 		// TODO: maybe throw exception if trying to make an invalid move?
 	}
 
+	/******************************************************************
+	 * Test if player is in check.
+	 *
+	 * @param  p {@link W18project3.Move} the Player being checked
+	 * @return true if player is in check, false if player is not.
+	 *****************************************************************/
 	public boolean inCheck(Player p) {
 		boolean valid = false;
 		return valid;
 	}
 
-
+	/******************************************************************
+	 * Get the player whoes turn it is currently.
+	 *
+	 * @return player to take his/her turn.
+	 *****************************************************************/
 	public Player currentPlayer() {
 		return player;
 	}
 
+	/******************************************************************
+	 * Gets the number of rows in the board.
+	 *
+	 * @return number of rows on the board.
+	 *****************************************************************/
 	public int numRows() {
 		return 8;
 	}
 
+	/******************************************************************
+	 * Get the number of columns on the board.
+	 *
+	 * @return number of columns on the board.
+	 *****************************************************************/
 	public int numColumns() {
 		return 8;
 	}
 
+	/******************************************************************
+	 * Get the piece with indexes 'row' and 'column'.
+	 *
+	 * @param row row of piece to get.
+	 * @param column column of piece to get.
+	 * @return referable to piece with index 'row' and 'column'.
+	 *****************************************************************/
 	public IChessPiece pieceAt(int row, int column) {		
 		return board[row][column];
 	}
 
+	/******************************************************************
+	 * Set player whoes turn it is to the other player.
+	 *****************************************************************/
 	public void setNextPlayer() {
 		player = player.next();
 	}
 
+	/******************************************************************
+	 * Set piece at index 'row' and 'column'.
+	 *
+	 * @param row of piece to set.
+	 * @param column of piece to set.
+	 * @param piece to be set at 'row' 'column' indices.
+	 *****************************************************************/
 	public void setPiece(int row, int column, IChessPiece piece) {
 		board[row][column] = piece;
 	}

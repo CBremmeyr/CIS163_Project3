@@ -27,6 +27,14 @@ public abstract class ChessPiece implements IChessPiece {
 		return owner;
 	}
 
+	/******************************************************************
+	 * Check if move is valid.
+	 *
+	 * @param move  a {@link W18project3.Move} object describing the move to be made.
+	 * @param board the {@link W18project3.IChessBoard} in which this piece resides.
+	 * @return true if the move is valid in general, false if move is
+	 * 		not valid.
+	 *****************************************************************/
 	public boolean isValidMove(Move move, IChessPiece[][] board) {
 
 		// Move is invalid if moved to same location
@@ -47,7 +55,4 @@ public abstract class ChessPiece implements IChessPiece {
 
 		return true;
 	}
-
-
-
 }
