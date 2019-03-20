@@ -6,6 +6,8 @@ import javax.swing.*;
 
 public class ChessPanel extends JPanel {
 
+    private final int BOARD_SIZE = 8;
+
     private JButton[][] board;
     private ChessModel model;
 
@@ -15,6 +17,13 @@ public class ChessPanel extends JPanel {
     private ImageIcon wKing;
     private ImageIcon wPawn;
     private ImageIcon wKnight;
+
+    private ImageIcon bRook;
+    private ImageIcon bBishop;
+    private ImageIcon bQueen;
+    private ImageIcon bKing;
+    private ImageIcon bPawn;
+    private ImageIcon bKnight;
 
     private boolean firstTurnFlag;
     private int fromRow;
@@ -28,11 +37,11 @@ public class ChessPanel extends JPanel {
         model = new ChessModel();
         board = new JButton[model.numRows()][model.numColumns()];
         listener = new Listener();
-        createIcons();
+        this.createIcons();
 
-        JPanel boardpanel = new JPanel();
-        JPanel buttonpanel = new JPanel();
-        boardpanel.setLayout(new GridLayout(model.numRows(), model.numColumns(), 1, 1));
+        JPanel boardPanel = new JPanel();
+        JPanel buttonPanel = new JPanel();
+        boardPanel.setLayout(new GridLayout(model.numRows(), model.numColumns(), 1, 1));
 
         for (int r = 0; r < model.numRows(); r++) {
             for (int c = 0; c < model.numColumns(); c++) {
@@ -43,12 +52,12 @@ public class ChessPanel extends JPanel {
                     placeWhitePieces(r, c);
 
                 setBackGroundColor(r, c);
-                boardpanel.add(board[r][c]);
+                boardPanel.add(board[r][c]);
             }
         }
-        add(boardpanel, BorderLayout.WEST);
-        boardpanel.setPreferredSize(new Dimension(600, 600));
-        add(buttonpanel);
+        add(boardPanel, BorderLayout.WEST);
+        boardPanel.setPreferredSize(new Dimension(600, 600));
+        add(buttonPanel);
         firstTurnFlag = true;
     }
 
@@ -88,20 +97,29 @@ public class ChessPanel extends JPanel {
     }
 
     private void createIcons() {
-        // Sets the Image for white player pieces
+
+        // Load the images for white player pieces
         wRook = new ImageIcon("./src/W19Project3/wRook.png");
         wBishop = new ImageIcon("./src/W19Project3/wBishop.png");
         wQueen = new ImageIcon("./src/W19Project3/wQueen.png");
         wKing = new ImageIcon("./src/W19Project3/wKing.png");
         wPawn = new ImageIcon("./src/W19Project3/wPawn.png");
         wKnight = new ImageIcon("./src/W19Project3/wKnight.png");
+
+        // Load the images for black player pieces
+        bRook = new ImageIcon("./src/W19Project3/wRook.png");
+        bBishop = new ImageIcon("./src/W19Project3/wBishop.png");
+        bQueen = new ImageIcon("./src/W19Project3/wQueen.png");
+        bKing = new ImageIcon("./src/W19Project3/wKing.png");
+        bPawn = new ImageIcon("./src/W19Project3/wPawn.png");
+        bKnight = new ImageIcon("./src/W19Project3/wKnight.png");
     }
 
     // method that updates the board
     private void displayBoard() {
 
-        for (int r = 0; r < 8; r++) {
-            for (int c = 0; c < 8; c++)
+        for (int r = 0; r < BOARD_SIZE; r++) {
+            for (int c = 0; c < BOARD_SIZE; c++)
                 if (model.pieceAt(r, c) == null)
                     board[r][c].setIcon(null);
                 else
