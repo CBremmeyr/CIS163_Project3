@@ -1,9 +1,22 @@
 package Chess;
 
+/**********************************************************************
+ * Base class for chess pieces.
+ *
+ * @author Corbin Bremmeyr
+ * @author Micheal James
+ * @version 20 March 2019
+ *********************************************************************/
 public abstract class ChessPiece implements IChessPiece {
 
+	/** Owner of the game piece */
 	private Player owner;
 
+	/******************************************************************
+	 * Constructor that sets the owner of the piece.
+	 *
+	 * @param player player that is the owner of the piece.
+	 *****************************************************************/
 	protected ChessPiece(Player player) {
 		this.owner = player;
 	}
