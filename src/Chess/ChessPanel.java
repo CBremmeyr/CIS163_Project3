@@ -289,9 +289,10 @@ public class ChessPanel extends JPanel {
             for(int r = 0; r < model.numRows(); r++) {
                 for(int c = 0; c < model.numColumns(); c++) {
 
-                    if(board[r][c] == event.getSource()) {
+                    if(board[r][c] == event.getSource() &&
+                            board[r][c] != null) {
 
-                        if(firstTurnFlag == true) {
+                        if(firstTurnFlag) {
                             fromRow = r;
                             fromCol = c;
                             firstTurnFlag = false;
@@ -302,7 +303,7 @@ public class ChessPanel extends JPanel {
                             firstTurnFlag = true;
                             Move m = new Move(fromRow, fromCol,
                                     toRow, toCol);
-                            if((model.isValidMove(m)) == true) {
+                            if(model.isValidMove(m)) {
                                 model.move(m);
                                 displayBoard();
                             }
