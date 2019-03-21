@@ -47,6 +47,12 @@ public class King extends ChessPiece {
 		if (rowM + colM == 1){
 			return true;
 		}
+		//if movement is no more than 2 in either direction
+		if (rowM < 2 && colM <2){
+			if (rowM + colM == 2){
+				return true;
+			}
+		}
 		return false;
 	}
 }

@@ -53,6 +53,17 @@ public class Pawn extends ChessPiece {
 					return false;
 				}
 			}
+			//if move is down 1, over 0
+			if (move.getToRow() == move.getFromRow() + 1 &&
+					move.getFromColumn() == move.getToColumn()) {
+				if(board[move.getToRow()][move.getToColumn()]!= null) {
+					if(board[move.getToRow()][move.getToColumn()]
+							.player() == Player.WHITE) {
+						return false;
+					}
+					return true;
+				}
+			}
 
 			//check if move is more than 2 rows while not first move
 			// and not up
@@ -101,9 +112,20 @@ public class Pawn extends ChessPiece {
 					return false;
 				}
 			}
+			//if move is up 1, over 0
+			if (move.getToRow() == move.getFromRow() - 1 &&
+					move.getFromColumn() == move.getToColumn()) {
+				if(board[move.getToRow()][move.getToColumn()]!= null){
+					if(board[move.getToRow()][move.getToColumn()]
+							.player() == Player.BLACK){
+						return false;
+					}
+				}
+				return true;
+			}
 
 			//check if move is more than 2 rows while not first move and not down
-			if (move.getToRow() >= move.getFromRow() - 2 ||
+			if (move.getToRow() <= move.getFromRow() - 2 ||
 					move.getToRow() >= move.getFromRow()) {
 				return false;
 			}
