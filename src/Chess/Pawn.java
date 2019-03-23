@@ -85,18 +85,21 @@ public class Pawn extends ChessPiece {
 			//move must be true
 			return true;
 		}
-		//bottom team
+
+		// Bottom team
 		if(super.player() == Player.WHITE) {
 
-			//if first move
-			if(move.getFromRow() == board.length-2){
-				//if move is up 2, over 0
-				if (move.getToRow() == move.getFromRow() - 2 &&
-						move.getFromColumn() == move.getToColumn()) {
+			// If first move
+			if(move.getFromRow() == board.length - 2){
+
+				// If move is up 2, over 0, and no piece is there
+				if(move.getToRow() == move.getFromRow() - 2 &&
+						move.getFromColumn() == move.getToColumn() &&
+						board[move.getToRow()][move.getToColumn()] == null) {
 					return true;
 				}
-				//if move is up 2 and over any number
-				if (move.getToRow() == move.getFromRow() - 2 &&
+				// If move is up 2 and over any number
+				if(move.getToRow() == move.getFromRow() - 2 &&
 						move.getFromColumn() != move.getToColumn()) {
 					return false;
 				}

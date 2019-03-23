@@ -51,9 +51,9 @@ public class ChessModel implements IChessModel {
 	}
 
 	/******************************************************************
-	 * Checks if game is over by seeing if a player is in checkmate.
 	 *
-	 * @return true if player is in checkmate, else false.
+	 *
+	 * @return
 	 *****************************************************************/
 	public boolean isComplete() {
 		boolean valid = false;
@@ -94,12 +94,7 @@ public class ChessModel implements IChessModel {
 			board[move.getFromRow()][move.getFromColumn()] = null;
 
 			// Toggle players' turns
-			if(this.player == Player.WHITE) {
-				this.player = Player.BLACK;
-			}
-			else if(this.player == Player.BLACK){
-				this.player = Player.WHITE;
-			}
+			this.player = this.player.next();
 		}
 
 		// TODO: maybe throw exception if trying to make an invalid move?
@@ -192,14 +187,5 @@ public class ChessModel implements IChessModel {
 		 *		i. check to see if that piece is in danger of being removed, if so, move a different piece.
 		 */
 
-		}
-
-	/******************************************************************
-	 * Getter for the next player to take a turn.
-	 *
-	 * @return next player to take a turn.
-	 *****************************************************************/
-	public Player getPlayer() {
-			return this.player;
 		}
 }
