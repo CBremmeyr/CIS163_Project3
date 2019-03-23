@@ -89,6 +89,7 @@ public class ChessPanel extends JPanel {
 
         for (int r = 0; r < model.numRows(); r++) {
             for (int c = 0; c < model.numColumns(); c++) {
+
                 if(model.pieceAt(r, c) == null) {
                     board[r][c] = new JButton("", null);
                     board[r][c].addActionListener(listener);
@@ -293,9 +294,11 @@ public class ChessPanel extends JPanel {
                             board[r][c] != null) {
 
                         if(firstTurnFlag) {
-                            fromRow = r;
-                            fromCol = c;
-                            firstTurnFlag = false;
+                            if(model.pieceAt(r, c) != null) {
+                                fromRow = r;
+                                fromCol = c;
+                                firstTurnFlag = false;
+                            }
                         }
                         else {
                             toRow = r;
