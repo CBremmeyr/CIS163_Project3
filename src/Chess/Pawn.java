@@ -98,6 +98,7 @@ public class Pawn extends ChessPiece {
 						board[move.getToRow()][move.getToColumn()] == null) {
 					return true;
 				}
+
 				// If move is up 2 and over any number
 				if(move.getToRow() == move.getFromRow() - 2 &&
 						move.getFromColumn() != move.getToColumn()) {
@@ -106,7 +107,7 @@ public class Pawn extends ChessPiece {
 			}
 
 			//check if move is more than 2 rows while not first move and not down
-			if (move.getToRow() >= move.getFromRow() - 2 ||
+			if(move.getToRow() <= move.getFromRow() - 2 ||
 					move.getToRow() >= move.getFromRow()) {
 				return false;
 			}
