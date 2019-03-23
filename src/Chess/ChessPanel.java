@@ -309,9 +309,17 @@ public class ChessPanel extends JPanel {
             for(int r = 0; r < model.numRows(); r++) {
                 for(int c = 0; c < model.numColumns(); c++) {
 
+                    // If source button
                     if(board[r][c] == event.getSource() &&
                             board[r][c] != null) {
 
+                        // If the first click of a turn is on an empty
+                        // space, ignore the click
+                        if(model.pieceAt(r, c) == null && firstTurnFlag) {
+                            return;
+                        }
+
+                        // If first click is on one of the other player's pieces ignore the click
                         if(model.pieceAt(r, c) != null && firstTurnFlag) {
                             if(model.currentPlayer() != model.pieceAt(r, c).player()) {
                                 return;

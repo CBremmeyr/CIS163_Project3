@@ -37,7 +37,7 @@ public class Bishop extends ChessPiece {
 	public boolean isValidMove(Move move, IChessPiece[][] board) {
 
 		// Check if move is valid in general
-		if(super.isValidMove(move, board)) {
+		if(!super.isValidMove(move, board)) {
 			return false;
 		}
 
