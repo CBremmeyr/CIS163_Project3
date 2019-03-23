@@ -12,7 +12,7 @@ public class ChessModel implements IChessModel {
 	/** Board to hold logical chess pieces */
     private IChessPiece[][] board;
 
-    /** Player whoes turn it currently is */
+    /** Next player to make a move */
 	private Player player;
 
 	/******************************************************************
@@ -51,9 +51,9 @@ public class ChessModel implements IChessModel {
 	}
 
 	/******************************************************************
+	 * Checks if game is over by seeing if a player is in checkmate.
 	 *
-	 *
-	 * @return
+	 * @return true if player is in checkmate, else false.
 	 *****************************************************************/
 	public boolean isComplete() {
 		boolean valid = false;
@@ -63,15 +63,17 @@ public class ChessModel implements IChessModel {
 	/******************************************************************
 	 * Check if a move is valid.
 	 *
-	 * @param move a {@link W18project3.Move} object describing the move to be made.
+	 * @param move a {@link Chess.Move} object describing the move to be made.
 	 * @return true if the move is valid, false if move is invalid.
 	 *****************************************************************/
 	public boolean isValidMove(Move move) {
 
 		if (board[move.getFromRow()][move.getFromColumn()] != null)
-			if (board[move.getFromRow()][move.getFromColumn()]
-					.isValidMove(move, board)) {
-				return true;
+			if(board[move.getFromRow()][move.getFromColumn()].player() == this.player) {
+				if (board[move.getFromRow()][move.getFromColumn()]
+						.isValidMove(move, board)) {
+					return true;
+				}
 			}
 
 		return false;
@@ -80,7 +82,8 @@ public class ChessModel implements IChessModel {
 	/******************************************************************
 	 * Perform move if it is valid.
 	 *
-	 * @param move a {@link W18project3.Move} object describing the move to be made.
+	 * @param move a {@link Chess.Move} object describing the move to
+	 *             be made.
 	 *****************************************************************/
 	public void move(Move move) {
 
@@ -89,6 +92,14 @@ public class ChessModel implements IChessModel {
 
 			board[move.getToRow()][move.getToColumn()] = board[move.getFromRow()][move.getFromColumn()];
 			board[move.getFromRow()][move.getFromColumn()] = null;
+
+			// Toggle players' turns
+			if(this.player == Player.WHITE) {
+				this.player = Player.BLACK;
+			}
+			else if(this.player == Player.BLACK){
+				this.player = Player.WHITE;
+			}
 		}
 
 		// TODO: maybe throw exception if trying to make an invalid move?
@@ -97,7 +108,7 @@ public class ChessModel implements IChessModel {
 	/******************************************************************
 	 * Test if player is in check.
 	 *
-	 * @param  p {@link W18project3.Move} the Player being checked
+	 * @param  p {@link Chess.Move} the Player being checked
 	 * @return true if player is in check, false if player is not.
 	 *****************************************************************/
 	public boolean inCheck(Player p) {
@@ -181,5 +192,14 @@ public class ChessModel implements IChessModel {
 		 *		i. check to see if that piece is in danger of being removed, if so, move a different piece.
 		 */
 
+		}
+
+	/******************************************************************
+	 * Getter for the next player to take a turn.
+	 *
+	 * @return next player to take a turn.
+	 *****************************************************************/
+	public Player getPlayer() {
+			return this.player;
 		}
 }

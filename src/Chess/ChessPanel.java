@@ -293,6 +293,12 @@ public class ChessPanel extends JPanel {
                     if(board[r][c] == event.getSource() &&
                             board[r][c] != null) {
 
+                        if(model.pieceAt(r, c) != null && firstTurnFlag) {
+                            if(model.getPlayer() != model.pieceAt(r, c).player()) {
+                                return;
+                            }
+                        }
+
                         if(firstTurnFlag) {
                             if(model.pieceAt(r, c) != null) {
                                 fromRow = r;
@@ -306,6 +312,7 @@ public class ChessPanel extends JPanel {
                             firstTurnFlag = true;
                             Move m = new Move(fromRow, fromCol,
                                     toRow, toCol);
+
                             if(model.isValidMove(m)) {
                                 model.move(m);
                                 displayBoard();
