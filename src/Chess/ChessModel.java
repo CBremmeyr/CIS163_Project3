@@ -103,12 +103,48 @@ public class ChessModel implements IChessModel {
 	/******************************************************************
 	 * Test if player is in check.
 	 *
-	 * @param  p {@link Chess.Move} the Player being checked
+	 * @param  p {@link Chess.Move} the Player being checked.
 	 * @return true if player is in check, false if player is not.
 	 *****************************************************************/
 	public boolean inCheck(Player p) {
-		boolean valid = false;
-		return valid;
+
+		int r = 0;
+		int c = 0;
+
+		// Get location of current player's king
+		for(int i=0; i<board.length; ++i) {
+			for(int j=0; j<board[i].length; ++j) {
+
+				if(pieceAt(i, j) != null) {
+					if(pieceAt(i, j).player() == p &&
+					pieceAt(i, j).type().equals("King")) {
+
+						r = i;
+						c = j;
+					}
+				}
+			}
+		}
+
+		// Check if any piece has a valid move to take the king
+		for(int i=0; i<board.length; ++i) {
+			for(int j=0; j<board[i].length; ++j) {
+
+				if(pieceAt(i, j) != null) {
+					if(pieceAt(i, j).player() != p) {
+
+						// Check if piece can take the king
+						Move testMove = new Move(r, c, i, j);
+						if(pieceAt(i, j).isValidMove(testMove, board)) {
+							return true;
+						}
+					}
+				}
+
+			}
+		}
+
+		return false;
 	}
 
 	/******************************************************************
