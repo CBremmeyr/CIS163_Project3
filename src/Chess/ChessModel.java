@@ -68,7 +68,6 @@ public class ChessModel implements IChessModel {
 	 * @return true if the game is over, else false.
 	 *****************************************************************/
 	public boolean isComplete() {
-		boolean valid = false;
 
 		if(!inCheck(player)) {
 			return false;
@@ -96,7 +95,7 @@ public class ChessModel implements IChessModel {
 									testGame.move(testMove);
 
 									// Test if test move takes player out of check
-									if(testGame.inCheck(this.player)) {
+									if(!testGame.inCheck(this.player)) {
 										return false;
 									}
 								}
