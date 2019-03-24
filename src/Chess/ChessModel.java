@@ -50,14 +50,64 @@ public class ChessModel implements IChessModel {
 		}
 	}
 
+	public ChessModel(ChessModel other) {
+		board = new IChessPiece[8][8];
+		player = other.player;
+
+		for(int i=0; i<board.length; ++i) {
+			for(int j=0; j<board[i].length; ++j) {
+
+				this.board[i][j] = other.board[i][j];
+			}
+		}
+	}
+
 	/******************************************************************
+	 * Check if current player is in checkmate, and the game is over.
 	 *
-	 *
-	 * @return
+	 * @return true if the game is over, else false.
 	 *****************************************************************/
 	public boolean isComplete() {
 		boolean valid = false;
-		return valid;
+
+		if(!inCheck(player)) {
+			return false;
+		}
+
+		// Check all possible moves for the current player and see if
+		// player can get out of check
+		for(int i=0; i<board.length; ++i) {
+			for(int j=0; j<board[i].length; ++j) {
+
+				if(pieceAt(i, j) != null) {
+					if(pieceAt(i, j).player() == player) {
+
+						// Check all possible moves for this piece
+						for(int r=0; r<board.length; ++r) {
+							for(int c=0; c<board[r].length; ++c) {
+
+								Move testMove = new Move(i, j, r, c);
+								if(isValidMove(testMove)) {
+
+									// Make temp board to able move and test
+									ChessModel testGame = new ChessModel(this);
+
+									// Apply test move
+									testGame.move(testMove);
+
+									// Test if test move takes player out of check
+									if(testGame.inCheck(this.player)) {
+										return false;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		return true;
 	}
 
 	/******************************************************************
