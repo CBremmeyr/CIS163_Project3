@@ -6,7 +6,7 @@ public class JUnitsChess {
 
     @Test
     void testChessPieceValidMove() {
-        
+
     }
 
 
