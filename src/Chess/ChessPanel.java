@@ -15,6 +15,8 @@ public class ChessPanel extends JPanel {
     /** Buttons to make game board */
     private JButton[][] board;
 
+    private JButton undo;
+
     /** Game logic class instance */
     private ChessModel model;
 
@@ -75,22 +77,33 @@ public class ChessPanel extends JPanel {
     /** Display who's turn it is */
     private JLabel currentTurn;
 
+    private JLabel check;
+
+
     /******************************************************************
      * Constructor for chess game panel.
      *****************************************************************/
     public ChessPanel() {
 
         // Init variables
+        setLayout(new BorderLayout());
+
         model = new ChessModel();
         this.boardSize = model.numRows();
         board = new JButton[model.numRows()][model.numColumns()];
+        undo = new JButton("Undo");
         listener = new Listener();
         currentTurn = new JLabel();
+        check = new JLabel();
         this.createIcons();
 
         JPanel boardPanel = new JPanel();
         JPanel buttonPanel = new JPanel();
         JPanel labelPanel = new JPanel();
+
+
+
+
 
         boardPanel.setLayout(new GridLayout(model.numRows(),
                 model.numColumns(), 1, 1));
@@ -116,14 +129,21 @@ public class ChessPanel extends JPanel {
         add(boardPanel, BorderLayout.WEST);
         boardPanel.setPreferredSize(new Dimension(600, 600));
 
-
+        buttonPanel.add(undo);
         add(buttonPanel, BorderLayout.EAST);
+        undo.addActionListener(listener);
 
         // Build label panel
         currentTurn.setFont(new Font("Monospaced", Font.PLAIN, 13));
         labelPanel.add(currentTurn);
-        add(labelPanel, BorderLayout.SOUTH);
         firstTurnFlag = true;
+
+        check.setFont(new Font("Monospaced", Font.PLAIN, 13));
+        labelPanel.add(check);
+
+        add(labelPanel, BorderLayout.SOUTH);
+
+
 
         this.displayBoard();
     }
@@ -291,6 +311,26 @@ public class ChessPanel extends JPanel {
         // Update current turn player label
         this.currentTurn.setText("Current turn: " + model.currentPlayer());
 
+
+
+//       if( model.inCheck(model.currentPlayer())){
+//           this.check.setText("                 Check "+ model.currentPlayer());
+//       }
+         if(model.isComplete()){
+             JOptionPane.showMessageDialog(this, "Checkmate");
+        }
+        else if(model.inCheck(Player.BLACK) && model.inCheck(Player.WHITE)){
+             JOptionPane.showMessageDialog(this, "Both players is in Check");
+        }
+       else if(model.inCheck(Player.BLACK)){
+             JOptionPane.showMessageDialog(this, "Black player is in Check");
+       }
+        else if(model.inCheck(Player.WHITE)){
+             JOptionPane.showMessageDialog(this, "White player is in Check");
+        }
+
+
+
         repaint();
     }
 
@@ -305,6 +345,10 @@ public class ChessPanel extends JPanel {
          * @param event event that triggered listener.
          *************************************************************/
         public void actionPerformed(ActionEvent event) {
+
+            if(undo == event.getSource()){
+                model.undo();
+            }
 
             for(int r = 0; r < model.numRows(); r++) {
                 for(int c = 0; c < model.numColumns(); c++) {
@@ -342,12 +386,13 @@ public class ChessPanel extends JPanel {
 
                             if(model.isValidMove(m)) {
                                 model.move(m);
-                                displayBoard();
+
                             }
                         }
                     }
                 }
             }
+            displayBoard();
         }
     }
 }

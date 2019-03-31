@@ -1,5 +1,8 @@
 package Chess;
 
+import java.util.ArrayList;
+import java.util.Stack;
+
 /**********************************************************************
  * Game logic class for game of chess.
  *
@@ -11,6 +14,7 @@ public class ChessModel implements IChessModel {
 
 	/** Board to hold logical chess pieces */
     private IChessPiece[][] board;
+    private Stack<ChessModel> moveHistory;
 
     /** Next player to make a move */
 	private Player player;
@@ -19,6 +23,7 @@ public class ChessModel implements IChessModel {
 	 * Setup game logic for new game.
 	 *****************************************************************/
 	public ChessModel() {
+		moveHistory = new Stack<>();
 		board = new IChessPiece[8][8];
 		player = Player.WHITE;
 
@@ -51,6 +56,7 @@ public class ChessModel implements IChessModel {
 	}
 
 	public ChessModel(ChessModel other) {
+		moveHistory = new Stack<>();
 		board = new IChessPiece[8][8];
 		player = other.player;
 
@@ -139,11 +145,16 @@ public class ChessModel implements IChessModel {
 		// Only move if valid
 		if(this.isValidMove(move)) {
 
+
+			moveHistory.push(new ChessModel(this));
+
+
 			board[move.getToRow()][move.getToColumn()] = board[move.getFromRow()][move.getFromColumn()];
 			board[move.getFromRow()][move.getFromColumn()] = null;
 
 			// Toggle players' turns
 			this.player = this.player.next();
+
 		}
 
 		// TODO: maybe throw exception if trying to make an invalid move?
@@ -183,7 +194,7 @@ public class ChessModel implements IChessModel {
 					if(pieceAt(i, j).player() != p) {
 
 						// Check if piece can take the king
-						Move testMove = new Move(r, c, i, j);
+						Move testMove = new Move(i, j, r, c);
 						if(pieceAt(i, j).isValidMove(testMove, board)) {
 							return true;
 						}
@@ -253,6 +264,7 @@ public class ChessModel implements IChessModel {
 	}
 
 	public void AI() {
+		
 
 
 		/*
@@ -273,4 +285,25 @@ public class ChessModel implements IChessModel {
 		 */
 
 		}
+
+
+
+
+
+
+
+		public void undo(){
+
+		if(moveHistory.empty()){
+			return;
+		}
+
+			ChessModel temp = moveHistory.pop();
+
+			this.board = temp.board;
+			this.player = temp.player;
+		}
+
+
+
 }
