@@ -129,11 +129,8 @@ public class Pawn extends ChessPiece {
 			}
 
 			//check if move is more than 2 rows while not first move and not down
-<<<<<<< HEAD
 			if (move.getToRow() <= move.getFromRow() - 2 ||
-=======
-			if(move.getToRow() <= move.getFromRow() - 2 ||
->>>>>>> 74233d5021696e0cf56944cffca8cbae52c2b4ed
+
 					move.getToRow() >= move.getFromRow()) {
 				return false;
 			}
