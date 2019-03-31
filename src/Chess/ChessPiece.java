@@ -21,6 +21,10 @@ public abstract class ChessPiece implements IChessPiece {
 		this.owner = player;
 	}
 
+	protected ChessPiece(ChessPiece other) {
+		this.owner = other.owner;
+	}
+
 	public abstract String type();
 
 	public Player player() {
@@ -30,8 +34,8 @@ public abstract class ChessPiece implements IChessPiece {
 	/******************************************************************
 	 * Check if move is valid.
 	 *
-	 * @param move  a {@link W18project3.Move} object describing the move to be made.
-	 * @param board the {@link W18project3.IChessBoard} in which this piece resides.
+	 * @param move  a {@link Chess.Move} object describing the move to be made.
+	 * @param board the {@link Chess.IChessBoard} in which this piece resides.
 	 * @return true if the move is valid in general, false if move is
 	 * 		not valid.
 	 *****************************************************************/

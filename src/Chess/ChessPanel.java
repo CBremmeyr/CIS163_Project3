@@ -72,23 +72,32 @@ public class ChessPanel extends JPanel {
     /** Listener for all board buttons */
     private Listener listener;
 
+    /** Display who's turn it is */
+    private JLabel currentTurn;
+
     /******************************************************************
      * Constructor for chess game panel.
      *****************************************************************/
     public ChessPanel() {
+
+        // Init variables
         model = new ChessModel();
         this.boardSize = model.numRows();
         board = new JButton[model.numRows()][model.numColumns()];
         listener = new Listener();
+        currentTurn = new JLabel();
         this.createIcons();
 
         JPanel boardPanel = new JPanel();
         JPanel buttonPanel = new JPanel();
+        JPanel labelPanel = new JPanel();
+
         boardPanel.setLayout(new GridLayout(model.numRows(),
                 model.numColumns(), 1, 1));
 
         for (int r = 0; r < model.numRows(); r++) {
             for (int c = 0; c < model.numColumns(); c++) {
+
                 if(model.pieceAt(r, c) == null) {
                     board[r][c] = new JButton("", null);
                     board[r][c].addActionListener(listener);
@@ -106,7 +115,14 @@ public class ChessPanel extends JPanel {
         }
         add(boardPanel, BorderLayout.WEST);
         boardPanel.setPreferredSize(new Dimension(600, 600));
-        add(buttonPanel);
+
+
+        add(buttonPanel, BorderLayout.EAST);
+
+        // Build label panel
+        currentTurn.setFont(new Font("Monospaced", Font.PLAIN, 13));
+        labelPanel.add(currentTurn);
+        add(labelPanel, BorderLayout.SOUTH);
         firstTurnFlag = true;
 
         this.displayBoard();
@@ -271,6 +287,10 @@ public class ChessPanel extends JPanel {
                 }
             }
         }
+
+        // Update current turn player label
+        this.currentTurn.setText("Current turn: " + model.currentPlayer());
+
         repaint();
     }
 
@@ -289,13 +309,29 @@ public class ChessPanel extends JPanel {
             for(int r = 0; r < model.numRows(); r++) {
                 for(int c = 0; c < model.numColumns(); c++) {
 
+                    // If source button
                     if(board[r][c] == event.getSource() &&
                             board[r][c] != null) {
 
+                        // If the first click of a turn is on an empty
+                        // space, ignore the click
+                        if(model.pieceAt(r, c) == null && firstTurnFlag) {
+                            return;
+                        }
+
+                        // If first click is on one of the other player's pieces ignore the click
+                        if(model.pieceAt(r, c) != null && firstTurnFlag) {
+                            if(model.currentPlayer() != model.pieceAt(r, c).player()) {
+                                return;
+                            }
+                        }
+
                         if(firstTurnFlag) {
-                            fromRow = r;
-                            fromCol = c;
-                            firstTurnFlag = false;
+                            if(model.pieceAt(r, c) != null) {
+                                fromRow = r;
+                                fromCol = c;
+                                firstTurnFlag = false;
+                            }
                         }
                         else {
                             toRow = r;
@@ -303,6 +339,7 @@ public class ChessPanel extends JPanel {
                             firstTurnFlag = true;
                             Move m = new Move(fromRow, fromCol,
                                     toRow, toCol);
+
                             if(model.isValidMove(m)) {
                                 model.move(m);
                                 displayBoard();

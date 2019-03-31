@@ -12,7 +12,7 @@ public class ChessModel implements IChessModel {
 	/** Board to hold logical chess pieces */
     private IChessPiece[][] board;
 
-    /** Player whoes turn it currently is */
+    /** Next player to make a move */
 	private Player player;
 
 	/******************************************************************
@@ -50,28 +50,79 @@ public class ChessModel implements IChessModel {
 		}
 	}
 
+	public ChessModel(ChessModel other) {
+		board = new IChessPiece[8][8];
+		player = other.player;
+
+		for(int i=0; i<board.length; ++i) {
+			for(int j=0; j<board[i].length; ++j) {
+
+				this.board[i][j] = other.board[i][j];
+			}
+		}
+	}
+
 	/******************************************************************
+	 * Check if current player is in checkmate, and the game is over.
 	 *
-	 *
-	 * @return
+	 * @return true if the game is over, else false.
 	 *****************************************************************/
 	public boolean isComplete() {
-		boolean valid = false;
-		return valid;
+
+		if(!inCheck(player)) {
+			return false;
+		}
+
+		// Check all possible moves for the current player and see if
+		// player can get out of check
+		for(int i=0; i<board.length; ++i) {
+			for(int j=0; j<board[i].length; ++j) {
+
+				if(pieceAt(i, j) != null) {
+					if(pieceAt(i, j).player() == player) {
+
+						// Check all possible moves for this piece
+						for(int r=0; r<board.length; ++r) {
+							for(int c=0; c<board[r].length; ++c) {
+
+								Move testMove = new Move(i, j, r, c);
+								if(isValidMove(testMove)) {
+
+									// Make temp board to able move and test
+									ChessModel testGame = new ChessModel(this);
+
+									// Apply test move
+									testGame.move(testMove);
+
+									// Test if test move takes player out of check
+									if(!testGame.inCheck(this.player)) {
+										return false;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		return true;
 	}
 
 	/******************************************************************
 	 * Check if a move is valid.
 	 *
-	 * @param move a {@link W18project3.Move} object describing the move to be made.
+	 * @param move a {@link Chess.Move} object describing the move to be made.
 	 * @return true if the move is valid, false if move is invalid.
 	 *****************************************************************/
 	public boolean isValidMove(Move move) {
 
-		if (board[move.getFromRow()][move.getFromColumn()] != null)
-			if (board[move.getFromRow()][move.getFromColumn()]
-					.isValidMove(move, board)) {
-				return true;
+		if(board[move.getFromRow()][move.getFromColumn()] != null)
+			if(board[move.getFromRow()][move.getFromColumn()].player() == this.player) {
+				if(board[move.getFromRow()][move.getFromColumn()]
+						.isValidMove(move, board)) {
+					return true;
+				}
 			}
 
 		return false;
@@ -80,7 +131,8 @@ public class ChessModel implements IChessModel {
 	/******************************************************************
 	 * Perform move if it is valid.
 	 *
-	 * @param move a {@link W18project3.Move} object describing the move to be made.
+	 * @param move a {@link Chess.Move} object describing the move to
+	 *             be made.
 	 *****************************************************************/
 	public void move(Move move) {
 
@@ -89,6 +141,9 @@ public class ChessModel implements IChessModel {
 
 			board[move.getToRow()][move.getToColumn()] = board[move.getFromRow()][move.getFromColumn()];
 			board[move.getFromRow()][move.getFromColumn()] = null;
+
+			// Toggle players' turns
+			this.player = this.player.next();
 		}
 
 		// TODO: maybe throw exception if trying to make an invalid move?
@@ -97,12 +152,48 @@ public class ChessModel implements IChessModel {
 	/******************************************************************
 	 * Test if player is in check.
 	 *
-	 * @param  p {@link W18project3.Move} the Player being checked
+	 * @param  p {@link Chess.Move} the Player being checked.
 	 * @return true if player is in check, false if player is not.
 	 *****************************************************************/
 	public boolean inCheck(Player p) {
-		boolean valid = false;
-		return valid;
+
+		int r = 0;
+		int c = 0;
+
+		// Get location of current player's king
+		for(int i=0; i<board.length; ++i) {
+			for(int j=0; j<board[i].length; ++j) {
+
+				if(pieceAt(i, j) != null) {
+					if(pieceAt(i, j).player() == p &&
+					pieceAt(i, j).type().equals("King")) {
+
+						r = i;
+						c = j;
+					}
+				}
+			}
+		}
+
+		// Check if any piece has a valid move to take the king
+		for(int i=0; i<board.length; ++i) {
+			for(int j=0; j<board[i].length; ++j) {
+
+				if(pieceAt(i, j) != null) {
+					if(pieceAt(i, j).player() != p) {
+
+						// Check if piece can take the king
+						Move testMove = new Move(r, c, i, j);
+						if(pieceAt(i, j).isValidMove(testMove, board)) {
+							return true;
+						}
+					}
+				}
+
+			}
+		}
+
+		return false;
 	}
 
 	/******************************************************************
