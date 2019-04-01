@@ -6,7 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 // TODO: bugs to fix
-//      - pawn can move 2 spaces and take a piece
+//      -
 
 public class JUnitsChess {
 
@@ -34,6 +34,21 @@ public class JUnitsChess {
 
 
         Assertions.assertTrue(game.isComplete());
+    }
+
+    @Test
+    void testIsComplete2() {
+
+        // Put player in check
+        game.move(new Move(6, 4, 4, 4));
+        game.move(new Move(1, 4, 3, 4));
+        game.move(new Move(7, 3, 4, 6));
+        game.move(new Move(0, 4, 1, 4));
+        game.move(new Move(4, 6, 4, 7));
+
+        // Test that player is not in checkmate
+        Assertions.assertFalse(game.isComplete());
+
     }
 
     @Test
