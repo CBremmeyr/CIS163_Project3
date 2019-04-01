@@ -386,6 +386,7 @@ public class ChessPanel extends JPanel {
 
                             if(model.isValidMove(m)) {
                                 model.move(m);
+                                model.AI();
 
                             }
                         }
@@ -393,6 +394,7 @@ public class ChessPanel extends JPanel {
                 }
             }
             displayBoard();
+
         }
     }
 }
