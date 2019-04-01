@@ -45,6 +45,12 @@ public class Pawn extends ChessPiece {
 				//if move is down 2, over 0
 				if (move.getToRow() == move.getFromRow() + 2 &&
 						move.getFromColumn() == move.getToColumn()) {
+
+					// Can't move 2 and take a piece
+					if(board[move.getToRow()][move.getToColumn()] != null) {
+						return false;
+					}
+
 					return true;
 				}
 				//if move is down 2 and over any number
