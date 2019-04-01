@@ -8,6 +8,13 @@ import org.junit.jupiter.api.Test;
 // TODO: bugs to fix
 //      -
 
+/**********************************************************************
+ * Test cases for backend of chess game.
+ *
+ * @author Corbin Bremmeyr
+ * @author Mike James
+ * @version 1 April 2019
+ *********************************************************************/
 public class JUnitsChess {
 
     private ChessModel game;

@@ -42,7 +42,8 @@ public class Bishop extends ChessPiece {
 		}
 
 		// Check if move is diagonal from starting position
-		if( !(Math.abs(move.getFromRow() - move.getToRow()) == Math.abs(move.getFromColumn() - move.getToColumn())) ) {
+		if( !(Math.abs(move.getFromRow() - move.getToRow()) ==
+				Math.abs(move.getFromColumn() - move.getToColumn())) ){
 			return false;
 		}
 
@@ -59,13 +60,6 @@ public class Bishop extends ChessPiece {
 			startPnt = move.getToRow();
 			endPnt = move.getFromRow();
 		}
-
-		// TODO: make helper function to generate indexes to check for pieces at, should use a int[abs(x0-x1)][2] to hold values
-//		for() {
-//			if(board[i][i].player() != null) {
-//				return false;
-//			}
-//		}
 
 		// Return true if all other test failed
 		return true;

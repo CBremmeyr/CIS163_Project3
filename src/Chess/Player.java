@@ -2,6 +2,10 @@ package Chess;
 
 /**********************************************************************
  * Enum for the two players of the game.
+ *
+ * @author Corbin Bremmeyr
+ * @author Mike James
+ * @version 1 April 2019
  *********************************************************************/
 public enum Player {
 	BLACK, WHITE;
