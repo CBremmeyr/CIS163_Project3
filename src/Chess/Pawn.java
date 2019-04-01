@@ -2,6 +2,10 @@ package Chess;
 
 /**********************************************************************
  * Class for pawn piece in a game of chess.
+ *
+ * @author Corbin Bremmeyr
+ * @author Mike James
+ * @version 1 April 2019
  *********************************************************************/
 public class Pawn extends ChessPiece {
 
@@ -47,7 +51,8 @@ public class Pawn extends ChessPiece {
 						move.getFromColumn() == move.getToColumn()) {
 
 					// Can't move 2 and take a piece
-					if(board[move.getToRow()][move.getToColumn()] != null) {
+					if(board[move.getToRow()][move.getToColumn()] !=
+							null) {
 						return false;
 					}
 
@@ -101,7 +106,8 @@ public class Pawn extends ChessPiece {
 				// If move is up 2, over 0, and no piece is there
 				if(move.getToRow() == move.getFromRow() - 2 &&
 						move.getFromColumn() == move.getToColumn() &&
-						board[move.getToRow()][move.getToColumn()] == null) {
+						board[move.getToRow()][move.getToColumn()] ==
+								null) {
 					return true;
 				}
 
@@ -112,7 +118,8 @@ public class Pawn extends ChessPiece {
 				}
 			}
 
-			//check if move is more than 2 rows while not first move and not down
+			//check if move is more than 2 rows while not first move
+			// and not down
 			if(move.getToRow() <= move.getFromRow() - 2 ||
 					move.getToRow() >= move.getFromRow()) {
 				return false;
