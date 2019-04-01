@@ -17,6 +17,9 @@ public class ChessPanel extends JPanel {
 
     private JButton undo;
 
+    private JButton aI;
+
+
     /** Game logic class instance */
     private ChessModel model;
 
@@ -92,6 +95,7 @@ public class ChessPanel extends JPanel {
         this.boardSize = model.numRows();
         board = new JButton[model.numRows()][model.numColumns()];
         undo = new JButton("Undo");
+        aI = new JButton("AI OFF");
         listener = new Listener();
         currentTurn = new JLabel();
         check = new JLabel();
@@ -130,8 +134,13 @@ public class ChessPanel extends JPanel {
         boardPanel.setPreferredSize(new Dimension(600, 600));
 
         buttonPanel.add(undo);
+
+        buttonPanel.add(aI);
         add(buttonPanel, BorderLayout.EAST);
+
         undo.addActionListener(listener);
+        aI.addActionListener(listener);
+
 
         // Build label panel
         currentTurn.setFont(new Font("Monospaced", Font.PLAIN, 13));
@@ -316,6 +325,7 @@ public class ChessPanel extends JPanel {
 //       if( model.inCheck(model.currentPlayer())){
 //           this.check.setText("                 Check "+ model.currentPlayer());
 //       }
+
          if(model.isComplete()){
              JOptionPane.showMessageDialog(this, "Checkmate");
         }
@@ -349,6 +359,17 @@ public class ChessPanel extends JPanel {
             if(undo == event.getSource()){
                 model.undo();
             }
+
+            if(aI == event.getSource()){
+                if (aI.getText().equals("AI OFF")) {
+                    aI.setText("AI ON");
+                }
+                else {
+                    aI.setText("AI OFF");
+                }
+            }
+
+
 
             for(int r = 0; r < model.numRows(); r++) {
                 for(int c = 0; c < model.numColumns(); c++) {
@@ -386,7 +407,9 @@ public class ChessPanel extends JPanel {
 
                             if(model.isValidMove(m)) {
                                 model.move(m);
-                                model.AI();
+                                if (aI.getText().equals("AI ON")) {
+                                    model.AI();
+                                }
 
                             }
                         }

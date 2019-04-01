@@ -316,6 +316,7 @@ public class ChessModel implements IChessModel {
 			for(int i=0; i<board.length; ++i) {
 				for(int j=0; j<board[i].length; ++j) {
 
+
 					if(pieceAt(i, j) != null) {
 						if(pieceAt(i, j).player() == player) {
 
@@ -348,7 +349,6 @@ public class ChessModel implements IChessModel {
 
 		for(int i=0; i<board.length; ++i) {
 			for(int j=0; j<board[i].length; ++j) {
-
 				if(pieceAt(i, j) != null) {
 					if(pieceAt(i, j).player() == player) {
 
@@ -385,7 +385,7 @@ public class ChessModel implements IChessModel {
 			for (int j = 0; j < board[i].length; ++j) {
 
 				if (pieceAt(i, j) != null) {
-					if (pieceAt(i, j).player() == player) {
+					if (pieceAt(i, j).player() == Player.BLACK) {
 						//if piece is in danger
 						if(danger(i,j)){
 							//check all movement options
@@ -401,11 +401,35 @@ public class ChessModel implements IChessModel {
 								}
 
 							}
-							//no safe move then protect
+							//find freindly piece
+							for (int m = 0; m < board.length; ++m) {
+								for (int n = 0; n < board[m].length; ++m) {
 
+									if (pieceAt(m, n) != null) {
+										if (pieceAt(m, n).player() == player) {
+											//look for move to protect
+											for (int k = 0; k < board.length; ++k) {
+												for (int l = 0; l < board[i].length; ++l) {
+													Move testMove = new Move(m, n, k, l);
+													if(isValidMove(testMove)){
+														// Make temp board to able move and test
+														ChessModel testGame = new ChessModel(this);
 
-
-
+														// Apply test move
+														testGame.move(testMove);
+														Move testmove2 = new Move(m,n,i,j);
+														if(testGame.isValidMove(testmove2)){
+															this.move(testMove);
+															return;
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+							
 						}
 					}
 				}
@@ -419,7 +443,30 @@ public class ChessModel implements IChessModel {
 			for (int j = 0; j < board.length; ++j) {
 
 				if (pieceAt(i, j) != null) {
-					if (pieceAt(i, j).player() == player && pieceAt(i, j).type().equals("Pawn")) {
+					if (pieceAt(i, j).player() == Player.BLACK && pieceAt(i, j).type().equals("Pawn")) {
+						for (int k = 0; k < board.length; ++k) {
+							for (int l = 0; l < board[i].length; ++l) {
+								//test if move is valid
+								Move testMove = new Move(i, j, k, l);
+								//if move is not in danger move piece
+								if(isValidMove(testMove) && !danger(k,l)) {
+									this.move(testMove);
+									return;
+								}
+
+							}
+
+						}
+					}
+				}
+			}
+		}
+
+		for (int i = 0; i < board.length; ++i) {
+			for (int j = 0; j < board.length; ++j) {
+
+				if (pieceAt(i, j) != null) {
+					if (pieceAt(i, j).player() == Player.BLACK) {
 						for (int k = 0; k < board.length; ++k) {
 							for (int l = 0; l < board[i].length; ++l) {
 								//test if move is valid
@@ -464,18 +511,24 @@ public class ChessModel implements IChessModel {
 
 		private boolean danger(int row, int column) {
 //		Player owner = this.board[row][column].player();
+
+			this.player = this.player.next();
+
 			for (int i = 0; i < board.length; ++i) {
 				for (int j = 0; j < board[i].length; ++j) {
 
 					if (pieceAt(i, j) != null) {
-						if (pieceAt(i, j).player() != player) {
+						if (pieceAt(i, j).player() == Player.WHITE) {
 
 							// Check all possible moves for this piece
 							for (int r = 0; r < board.length; ++r) {
 								for (int c = 0; c < board[r].length; ++c) {
 									Move testMove = new Move(i, j, r, c);
-									if (isValidMove(testMove) && r == row && c == column) {
-										return true;
+									if (r == row && c == column) {
+										if (isValidMove(testMove) && r == row && c == column) {
+											this.player = this.player.next();
+											return true;
+										}
 									}
 								}
 							}
@@ -484,7 +537,8 @@ public class ChessModel implements IChessModel {
 				}
 			}
 
-				return false;
+			this.player = this.player.next();
+			return false;
 
 		}
 
