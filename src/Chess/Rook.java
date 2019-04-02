@@ -5,7 +5,7 @@ package Chess;
  *
  * @author Corbin Bremmeyr
  * @author Michael James
- * @version 4 March 2019
+ * @version 23 March 2019
  *********************************************************************/
 public class Rook extends ChessPiece {
 
@@ -28,8 +28,6 @@ public class Rook extends ChessPiece {
 		
 		return "Rook";
 	}
-	
-	// determines if the move is valid for a rook piece
 
 	/******************************************************************
 	 * Tell if a move is valid for this Rook.
@@ -74,10 +72,10 @@ public class Rook extends ChessPiece {
 
 			// Check for pieces over the range of the move, if there is
 			// a piece then the move is invalid
-			for(int i=startPoint; i < endPoint; ++i) {
+			for(int i = startPoint+1; i < endPoint; ++i) {
 
 				// If a board location has a piece on it
-				if( !(board[i][move.getFromColumn()] == null)) {
+				if( !(board[move.getFromRow()][i] == null)) {
 					return false;
 				}
 			}
@@ -99,10 +97,11 @@ public class Rook extends ChessPiece {
 
 			// Check for pieces over the range of the move, if there is
 			// a piece then the move is invalid
-			for(int i=startPoint; i < endPoint; ++i) {
+			for(int i=startPoint+1; i < endPoint; ++i) {
+
 
 				// If a board location has a piece on it
-				if( !(board[move.getFromRow()][i] == null)) {
+				if( !(board[i][move.getFromColumn()] == null)) {
 					return false;
 				}
 			}

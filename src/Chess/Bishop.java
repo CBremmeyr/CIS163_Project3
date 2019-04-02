@@ -37,7 +37,8 @@ public class Bishop extends ChessPiece {
 	public boolean isValidMove(Move move, IChessPiece[][] board) {
 
 		// Check if move is valid in general
-		if(super.isValidMove(move, board)) {
+		if(!(super.isValidMove(move, board))) {
+
 			return false;
 		}
 
@@ -59,13 +60,54 @@ public class Bishop extends ChessPiece {
 			startPnt = move.getToRow();
 			endPnt = move.getFromRow();
 		}
+		int row1 = move.getFromRow();
+		int col1 = move.getFromColumn();
+		int row2 = move.getToRow();
+		int col2 = move.getToColumn();
 
 		// TODO: make helper function to generate indexes to check for pieces at, should use a int[abs(x0-x1)][2] to hold values
-//		for() {
-//			if(board[i][i].player() != null) {
-//				return false;
-//			}
-//		}
+		//down and right
+		if(move.getFromRow() < move.getToRow() && move.getFromColumn() < move.getToColumn()){
+
+			while((row1 != row2-1) && (col1 != col2-1)){
+				row1++;
+				col1++;
+				if(board[row1][col1] != null) {
+					return false;
+				}
+			}
+			}
+
+		//up and right
+		if(move.getFromRow() > move.getToRow() && move.getFromColumn() < move.getToColumn()){
+			while((row1 != row2+1) && (col1 != col2-1)){
+				row1--;
+				col1++;
+				if(board[row1][col1] != null) {
+					return false;
+				}
+			}
+		}
+		//up and left
+		if(move.getFromRow() > move.getToRow() && move.getFromColumn() > move.getToColumn()){
+			while((row1 != row2+1) && (col1 != col2+1)){
+				row1--;
+				col1--;
+				if(board[row1][col1] != null) {
+					return false;
+				}
+			}
+		}
+		//down left
+		if(move.getFromRow() < move.getToRow() && move.getFromColumn() > move.getToColumn()){
+			while((row1 != row2-1) && (col1 != col2+1)){
+				row1++;
+				col1--;
+				if(board[row1][col1] != null) {
+					return false;
+				}
+			}
+		}
 
 		// Return true if all other test failed
 		return true;
