@@ -15,10 +15,11 @@ public class ChessPanel extends JPanel {
     /** Buttons to make game board */
     private JButton[][] board;
 
+    /** Button for undo*/
     private JButton undo;
 
+    /** Button for toggling AI*/
     private JButton aI;
-
 
     /** Game logic class instance */
     private ChessModel model;
@@ -80,6 +81,7 @@ public class ChessPanel extends JPanel {
     /** Display who's turn it is */
     private JLabel currentTurn;
 
+    /** Displays check*/
     private JLabel check;
 
 
@@ -322,12 +324,10 @@ public class ChessPanel extends JPanel {
 
 
 
-//       if( model.inCheck(model.currentPlayer())){
-//           this.check.setText("                 Check "+ model.currentPlayer());
-//       }
+
 
          if(model.isComplete()){
-             JOptionPane.showMessageDialog(this, "Checkmate");
+             JOptionPane.showMessageDialog(this, "Checkmate, game over!");
         }
         else if(model.inCheck(Player.BLACK) && model.inCheck(Player.WHITE)){
              JOptionPane.showMessageDialog(this, "Both players is in Check");
@@ -358,14 +358,17 @@ public class ChessPanel extends JPanel {
 
             if(undo == event.getSource()){
                 model.undo();
+                displayBoard();
             }
 
             if(aI == event.getSource()){
                 if (aI.getText().equals("AI OFF")) {
                     aI.setText("AI ON");
+                    displayBoard();
                 }
                 else {
                     aI.setText("AI OFF");
+                    displayBoard();
                 }
             }
 
@@ -396,6 +399,7 @@ public class ChessPanel extends JPanel {
                                 fromRow = r;
                                 fromCol = c;
                                 firstTurnFlag = false;
+
                             }
                         }
                         else {
@@ -407,8 +411,11 @@ public class ChessPanel extends JPanel {
 
                             if(model.isValidMove(m)) {
                                 model.move(m);
+                                displayBoard();
                                 if (aI.getText().equals("AI ON")) {
                                     model.AI();
+                                    displayBoard();
+
                                 }
 
                             }
@@ -416,7 +423,7 @@ public class ChessPanel extends JPanel {
                     }
                 }
             }
-            displayBoard();
+
 
         }
     }
