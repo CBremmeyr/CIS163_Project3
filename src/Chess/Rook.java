@@ -97,7 +97,8 @@ public class Rook extends ChessPiece {
 
 			// Check for pieces over the range of the move, if there is
 			// a piece then the move is invalid
-			for(int i = startPoint+1; i < endPoint; ++i) {
+			for(int i=startPoint+1; i < endPoint; ++i) {
+
 
 				// If a board location has a piece on it
 				if( !(board[i][move.getFromColumn()] == null)) {
