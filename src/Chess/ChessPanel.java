@@ -243,10 +243,10 @@ public class ChessPanel extends JPanel {
      *****************************************************************/
     private void createIcons() {
 
-        String iconPath = "./icons/";
+        String iconPath = "./src/icons/";
 
         // Load the images for white player pieces
-        wRook   = new ImageIcon("./icons/wRook.png");
+        wRook   = new ImageIcon(iconPath + "wRook.png");
         wBishop = new ImageIcon(iconPath + "wBishop.png");
         wQueen  = new ImageIcon(iconPath + "wQueen.png");
         wKing   = new ImageIcon(iconPath + "wKing.png");
