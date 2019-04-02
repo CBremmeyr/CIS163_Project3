@@ -127,6 +127,14 @@ public class ChessModel implements IChessModel {
 			if(board[move.getFromRow()][move.getFromColumn()].player() == this.player) {
 				if(board[move.getFromRow()][move.getFromColumn()]
 						.isValidMove(move, board)) {
+
+					// Test if move put player in check
+					ChessModel testGame = new ChessModel(this);
+					testGame.move(move);
+					if(testGame.inCheck(this.player)) {
+						return false;
+					}
+
 					return true;
 				}
 			}
@@ -143,7 +151,7 @@ public class ChessModel implements IChessModel {
 	public void move(Move move) {
 
 		// Only move if valid
-		if(this.isValidMove(move)) {
+//		if(this.isValidMove(move)) {
 
 
 			moveHistory.push(new ChessModel(this));
@@ -155,7 +163,7 @@ public class ChessModel implements IChessModel {
 			// Toggle players' turns
 			this.player = this.player.next();
 
-		}
+//		}
 
 		// TODO: maybe throw exception if trying to make an invalid move?
 	}
@@ -403,7 +411,7 @@ public class ChessModel implements IChessModel {
 							}
 							//find freindly piece
 							for (int m = 0; m < board.length; ++m) {
-								for (int n = 0; n < board[m].length; ++m) {
+								for (int n = 0; n < board[m].length; ++n) {
 
 									if (pieceAt(m, n) != null) {
 										if (pieceAt(m, n).player() == player) {
@@ -429,12 +437,38 @@ public class ChessModel implements IChessModel {
 									}
 								}
 							}
-							
+
 						}
 					}
 				}
 			}
 		}
+//check for attack
+		for (int i = 0; i < board.length; ++i) {
+			for (int j = 0; j < board[i].length; ++j) {
+
+				if (pieceAt(i, j) != null) {
+					if (pieceAt(i, j).player() == Player.WHITE) {
+						//if piece is in danger
+						if (danger(i, j)) {
+							for (int k = 0; k < board.length; ++k) {
+								for (int l = 0; l < board[i].length; ++l) {
+									//test if move is valid
+									Move testMove = new Move(k, l, i, j);
+									if(isValidMove(testMove) && !danger(i,j)) {
+										this.move(testMove);
+										return;
+									}
+
+								}
+
+							}
+						}
+					}
+				}
+			}
+		}
+
 
 		//d. Move a piece (pawns first) forward toward opponent king
 		//		i. check to see if that piece is in danger of being removed, if so, move a different piece.
@@ -518,7 +552,7 @@ public class ChessModel implements IChessModel {
 				for (int j = 0; j < board[i].length; ++j) {
 
 					if (pieceAt(i, j) != null) {
-						if (pieceAt(i, j).player() == Player.WHITE) {
+						if (pieceAt(i, j).player() == player) {
 
 							// Check all possible moves for this piece
 							for (int r = 0; r < board.length; ++r) {
