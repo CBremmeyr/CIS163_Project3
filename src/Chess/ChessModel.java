@@ -261,16 +261,8 @@ public class ChessModel implements IChessModel {
 	}
 
 	/******************************************************************
-	 * Set piece at index 'row' and 'column'.
-	 *
-	 * @param row of piece to set.
-	 * @param column of piece to set.
-	 * @param piece to be set at 'row' 'column' indices.
+	 * Makes a move for a turn of chess.
 	 *****************************************************************/
-//	public void setPiece(int row, int column, IChessPiece piece) {
-//		board[row][column] = piece;
-//	}
-
 	public void AI() {
 		/*
 		 * Write a simple AI set of rules in the following order.
