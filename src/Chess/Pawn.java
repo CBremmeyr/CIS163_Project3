@@ -55,6 +55,10 @@ public class Pawn extends ChessPiece {
 							null) {
 						return false;
 					}
+					if(board[move.getToRow()-1][move.getToColumn()] !=
+							null) {
+						return false;
+					}
 
 					return true;
 				}
@@ -118,7 +122,8 @@ public class Pawn extends ChessPiece {
 				if(move.getToRow() == move.getFromRow() - 2 &&
 						move.getFromColumn() == move.getToColumn() &&
 						board[move.getToRow()][move.getToColumn()] ==
-								null) {
+								null && board[move.getToRow()+1][move.getToColumn()] ==
+						null ) {
 					return true;
 				}
 
