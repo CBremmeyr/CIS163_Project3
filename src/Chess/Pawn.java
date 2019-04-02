@@ -68,6 +68,7 @@ public class Pawn extends ChessPiece {
 					return false;
 				}
 			}
+
 			//if move is down 1, over 0
 			if (move.getToRow() == move.getFromRow() + 1 &&
 					move.getFromColumn() == move.getToColumn()) {
@@ -133,6 +134,7 @@ public class Pawn extends ChessPiece {
 					return false;
 				}
 			}
+
 			//if move is up 1, over 0
 			if (move.getToRow() == move.getFromRow() - 1 &&
 					move.getFromColumn() == move.getToColumn()) {
@@ -162,6 +164,7 @@ public class Pawn extends ChessPiece {
 			if(move.getFromColumn() == move.getToColumn()+1 ||
 					move.getFromColumn() == move.getToColumn()-1
 					&& move.getFromRow() == move.getToRow() + 1) {
+
 				//if enemy piece is there
 				if(board[move.getToRow()][move.getToColumn()]!= null){
 					if(board[move.getToRow()][move.getToColumn()]
@@ -169,6 +172,7 @@ public class Pawn extends ChessPiece {
 						return true;
 					}
 				}
+
 				//piece not there then invalid
 				else return false;
 			}

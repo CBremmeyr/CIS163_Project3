@@ -200,8 +200,6 @@ public class JUnitsChess {
         // Test if piece is in danger
         boolean before = game.danger(1, 1) && game.pieceAt(1, 1) != null;
 
-        System.out.println(before);
-
         // Let AI make move
         game.AI();
 

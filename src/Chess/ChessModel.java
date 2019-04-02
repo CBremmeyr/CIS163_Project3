@@ -94,14 +94,17 @@ public class ChessModel implements IChessModel {
 								Move testMove = new Move(i, j, r, c);
 								if(isValidMove(testMove)) {
 
-									// Make temp board to able move and test
-									ChessModel testGame = new ChessModel(this);
+									// Make temp board to able move
+									// and test
+									ChessModel testGame =
+											new ChessModel(this);
 
 									// Apply test move
 									testGame.move(testMove);
 
-									// Test if test move takes player out of check
-									if(!testGame.inCheck(this.player)) {
+									// Test if test move takes player
+									// out of check
+									if(!testGame.inCheck(this.player)){
 										return false;
 									}
 								}
@@ -124,7 +127,8 @@ public class ChessModel implements IChessModel {
 	public boolean isValidMove(Move move) {
 
 		if(board[move.getFromRow()][move.getFromColumn()] != null)
-			if(board[move.getFromRow()][move.getFromColumn()].player() == this.player) {
+			if(board[move.getFromRow()][move.getFromColumn()].player()
+					== this.player) {
 				if(board[move.getFromRow()][move.getFromColumn()]
 						.isValidMove(move, board)) {
 
@@ -404,18 +408,19 @@ public class ChessModel implements IChessModel {
 									if (pieceAt(m, n) != null) {
 										if (pieceAt(m, n).player() == player) {
 
-											// look for move to protect
+											// look for move to protect other piece
 											for (int k = 0; k < board.length; ++k) {
 												for (int l = 0; l < board[i].length; ++l) {
 													Move testMove = new Move(m, n, k, l);
 													if (isValidMove(testMove)) {
+
 														// Make temp board to able move and test
 														ChessModel testGame = new ChessModel(this);
 
 														// Apply test move
 														testGame.move(testMove);
-														Move testmove2 = new Move(m, n, i, j);
-														if (testGame.isValidMove(testmove2)) {
+														Move testMove2 = new Move(m, n, i, j);
+														if (testGame.isValidMove(testMove2)) {
 															this.move(testMove);
 															return;
 														}
@@ -438,11 +443,13 @@ public class ChessModel implements IChessModel {
 
 				if (pieceAt(i, j) != null) {
 					if (pieceAt(i, j).player() == Player.WHITE) {
-						//if piece is in danger
+
+						// If piece is in danger
 						if (danger(i, j)) {
 							for (int k = 0; k < board.length; ++k) {
 								for (int l = 0; l < board[i].length; ++l) {
-									//test if move is valid
+
+									// Test if move is valid
 									Move testMove = new Move(k, l, i, j);
 									if (isValidMove(testMove) && !danger(i, j)) {
 										this.move(testMove);
@@ -471,16 +478,15 @@ public class ChessModel implements IChessModel {
 							pieceAt(i, j).type().equals("Pawn")) {
 						for (int k = 0; k < board.length; ++k) {
 							for (int l = 0; l < board[i].length; ++l) {
-								//test if move is valid
+
+								// Test if move is valid
 								Move testMove = new Move(i, j, k, l);
-								//if move is not in danger move piece
+								// If move is not in danger move piece
 								if (isValidMove(testMove) && !danger(k, l)) {
 									this.move(testMove);
 									return;
 								}
-
 							}
-
 						}
 					}
 				}
@@ -494,9 +500,11 @@ public class ChessModel implements IChessModel {
 					if (pieceAt(i, j).player() == Player.BLACK) {
 						for (int k = 0; k < board.length; ++k) {
 							for (int l = 0; l < board[i].length; ++l) {
-								//test if move is valid
+
+								// Test if move is valid
 								Move testMove = new Move(i, j, k, l);
-								//if move is not in danger move piece
+
+								// If move is not in danger move piece
 								if (isValidMove(testMove) && !danger(k,
 										l)) {
 									this.move(testMove);
@@ -518,7 +526,6 @@ public class ChessModel implements IChessModel {
 	 * @return true if location can be attacked, else false
 	 *****************************************************************/
 		public boolean danger(int row, int column) {
-//		Player owner = this.board[row][column].player();
 
 			this.player = this.player.next();
 

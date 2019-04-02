@@ -66,7 +66,6 @@ public class Bishop extends ChessPiece {
 		int row2 = move.getToRow();
 		int col2 = move.getToColumn();
 
-		// TODO: make helper function to generate indexes to check for pieces at, should use a int[abs(x0-x1)][2] to hold values
 		//down and right
 		if(move.getFromRow() < move.getToRow() && move.getFromColumn() < move.getToColumn()){
 

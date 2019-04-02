@@ -41,6 +41,7 @@ public class Queen extends ChessPiece {
 				getFromColumn()].player());
 		Rook move2 = new Rook(board[move.getFromRow()][move.
 				getFromColumn()].player());
+		
 		return (move1.isValidMove(move, board) || move2.
 				isValidMove(move, board));
 	}

@@ -48,6 +48,7 @@ public class Knight extends ChessPiece {
 		if (rowM + colM == 3 && rowM < 3 && colM < 3){
 			return true;
 		}
+
 		return false;
 	}
 

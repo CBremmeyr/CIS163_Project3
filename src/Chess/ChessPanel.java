@@ -417,14 +417,11 @@ public class ChessPanel extends JPanel {
                                     displayBoard();
 
                                 }
-
                             }
                         }
                     }
                 }
             }
-
-
         }
     }
 }
