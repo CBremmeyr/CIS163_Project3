@@ -149,7 +149,7 @@ public class ChessModel implements IChessModel {
 	 *             be made.
 	 *****************************************************************/
 	public void move(Move move) {
-		
+
 			moveHistory.push(new ChessModel(this));
 
 			board[move.getToRow()][move.getToColumn()] =
