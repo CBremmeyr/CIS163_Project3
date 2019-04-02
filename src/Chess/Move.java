@@ -2,6 +2,10 @@ package Chess;
 
 /**********************************************************************
  * Class to describe a player's move.
+ *
+ * @author Corbin Bremmeyr
+ * @author Mike James
+ * @version 1 April 2019
  *********************************************************************/
 public class Move {
 

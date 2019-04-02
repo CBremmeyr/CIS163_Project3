@@ -2,6 +2,10 @@ package Chess;
 
 /**********************************************************************
  * Queen chess piece class.
+ *
+ * @author Corbin Bremmeyr
+ * @author Mike James
+ * @version 1 April 2019
  *********************************************************************/
 public class Queen extends ChessPiece {
 
@@ -33,8 +37,11 @@ public class Queen extends ChessPiece {
 	 * @return true if move is valid, false if move is invalid.
 	 *****************************************************************/
 	public boolean isValidMove(Move move, IChessPiece[][] board) {
-		Bishop move1 = new Bishop(board[move.getFromRow()][move.getFromColumn()].player());
-		Rook move2 = new Rook(board[move.getFromRow()][move.getFromColumn()].player());
-		return (move1.isValidMove(move, board) || move2.isValidMove(move, board));
+		Bishop move1 = new Bishop(board[move.getFromRow()][move.
+				getFromColumn()].player());
+		Rook move2 = new Rook(board[move.getFromRow()][move.
+				getFromColumn()].player());
+		return (move1.isValidMove(move, board) || move2.
+				isValidMove(move, board));
 	}
 }

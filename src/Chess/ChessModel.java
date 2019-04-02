@@ -267,9 +267,9 @@ public class ChessModel implements IChessModel {
 	 * @param column of piece to set.
 	 * @param piece to be set at 'row' 'column' indices.
 	 *****************************************************************/
-	public void setPiece(int row, int column, IChessPiece piece) {
-		board[row][column] = piece;
-	}
+//	public void setPiece(int row, int column, IChessPiece piece) {
+//		board[row][column] = piece;
+//	}
 
 	public void AI() {
 		/*
@@ -519,11 +519,6 @@ public class ChessModel implements IChessModel {
 			}
 		}
 
-
-
-
-
-
 		/*
 		 * Write a simple AI set of rules in the following order. 
 		 * a. Check to see if you are in check.
@@ -541,7 +536,7 @@ public class ChessModel implements IChessModel {
 		 *		i. check to see if that piece is in danger of being removed, if so, move a different piece.
 		 */
 
-		}
+
 
 		private boolean danger(int row, int column) {
 //		Player owner = this.board[row][column].player();
@@ -593,7 +588,4 @@ public class ChessModel implements IChessModel {
 			this.board = temp.board;
 			this.player = temp.player;
 		}
-
-
-
 }

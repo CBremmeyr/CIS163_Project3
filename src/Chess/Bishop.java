@@ -43,7 +43,8 @@ public class Bishop extends ChessPiece {
 		}
 
 		// Check if move is diagonal from starting position
-		if( !(Math.abs(move.getFromRow() - move.getToRow()) == Math.abs(move.getFromColumn() - move.getToColumn())) ) {
+		if( !(Math.abs(move.getFromRow() - move.getToRow()) ==
+				Math.abs(move.getFromColumn() - move.getToColumn())) ){
 			return false;
 		}
 

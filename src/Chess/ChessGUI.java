@@ -4,6 +4,13 @@ import java.awt.Dimension;
 
 import javax.swing.JFrame;
 
+/**********************************************************************
+ * GUI for a game of chess.
+ *
+ * @author Corbin Bremmeyr
+ * @author Mike James
+ * @version 1 April 2019
+ *********************************************************************/
 public class ChessGUI {
 
     public static void main(String[] args) {
