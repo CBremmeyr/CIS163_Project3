@@ -5,8 +5,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-// TODO: bugs to fix
-//      -
 
 /**********************************************************************
  * Test cases for backend of chess game.
@@ -74,7 +72,7 @@ public class JUnitsChess {
     void testMove() {
 
         // Make an invalid move
-        game.move(new Move(0,0, 2, 4));
+        game.move(new Move(0,0, 4, 4));
 
         // Check that location moved to is still null
         Assertions.assertTrue(game.pieceAt(2, 4) == null);
